@@ -132,9 +132,6 @@
 					assert.ignore();
 				}
 
-				if ( bender.config.isTravis && CKEDITOR.env.gecko ) {
-					assert.ignore();
-				}
 				this.sandbox.stub( window, 'alert' );
 
 				this.editorBot.setHtmlWithSelection( '<p>^</p>' );
@@ -210,6 +207,42 @@
 								assert.areSame( 'easyimage', editor.widgets.focused.name );
 							} );
 						} );
+					}
+				} ) );
+
+				pasteFiles( editor, [ bender.tools.getTestPngFile() ], null, { type: 'auto', method: 'paste' } );
+
+				wait();
+			},
+
+			// (#5414)
+			'test change event is fired after the upload finishes': function() {
+				var editor = this.editor,
+					listeners = this.listeners;
+
+				listeners.push( editor.widgets.on( 'instanceCreated', function( evt ) {
+					var widget = evt.data,
+						isUploaded = false;
+
+					if ( widget.name == 'easyimage' ) {
+						widget.once( 'uploadDone', function() {
+							isUploaded = true;
+						} );
+
+						listeners.push( editor.on( 'change', function( evt ) {
+							if ( !isUploaded ) {
+								return;
+							}
+
+							resume( function() {
+								var editorData = evt.editor.getData(),
+									// To check if the change contains correct upload data,
+									// we can simply check the existence of srcset attribute with a part of the path.
+									containsUploadedImageSrc =
+										editorData.indexOf( 'srcset="/tests/' ) !== -1 || editorData.indexOf( 'src="blob:http' ) !== -1;
+								assert.isTrue( containsUploadedImageSrc );
+							} );
+						} ) );
 					}
 				} ) );
 

@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang( 'image2', 'el', {
 	alt: 'Εναλλακτικό Κείμενο',
@@ -17,5 +17,5 @@ CKEDITOR.plugins.setLang( 'image2', 'el', {
 	title: 'Ιδιότητες Εικόνας',
 	uploadTab: 'Αποστολή',
 	urlMissing: 'Λείπει το πηγαίο URL της εικόνας.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Το εναλλακτικό κείμενο λείπει.'
 } );

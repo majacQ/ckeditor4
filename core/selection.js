@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 ( function() {
@@ -628,7 +628,8 @@
 		function isEmptyElement( element ) {
 			var text = element.$.textContent === undefined ? element.$.innerText : element.$.textContent;
 
-			return text === '';
+			// Check if the element does not contain a widget to prevent removal of the body element. (#5125)
+			return text === '' && !isWidget( element.getFirst() );
 		}
 
 		function isEmptyBlock( block ) {

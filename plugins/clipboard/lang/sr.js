@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang( 'clipboard', 'sr', {
 	copy: 'Копирај',
@@ -11,5 +11,6 @@ CKEDITOR.plugins.setLang( 'clipboard', 'sr', {
 	pasteNotification: 'Притисните тастер %1 за лепљење. Ваш ретраживач не дозвољаба лепљење из алатне траке или мениа.',
 	pasteArea: 'Залепи зону',
 	pasteMsg: 'Налепите садржај у следећи простор и притисните тастер OK.',
-	fileFormatNotSupportedNotification: 'This file format is not supported. You can try with one of the supported formats: ${formats}.' // MISSING
+	fileFormatNotSupportedNotification: 'Формати датотеке ${форматс} нису подржани.',
+	fileWithoutFormatNotSupportedNotification: 'Формат датотеке није подржан.'
 } );

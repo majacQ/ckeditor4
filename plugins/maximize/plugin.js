@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 ( function() {
@@ -116,6 +116,14 @@
 			function resizeHandler() {
 				var viewPaneSize = mainWindow.getViewPaneSize();
 				editor.resize( viewPaneSize.width, viewPaneSize.height, null, true );
+			}
+
+			function handleHistoryApi() {
+				var command = editor.getCommand( 'maximize' );
+
+				if ( command.state === CKEDITOR.TRISTATE_ON ) {
+					command.exec();
+				}
 			}
 
 			// Retain state after mode switches.
@@ -248,17 +256,6 @@
 
 					this.toggleState();
 
-					// Toggle button label.
-					var button = this.uiItems[ 0 ];
-					// Only try to change the button if it exists (https://dev.ckeditor.com/ticket/6166)
-					if ( button ) {
-						var label = ( this.state == CKEDITOR.TRISTATE_OFF ) ? lang.maximize.maximize : lang.maximize.minimize;
-						var buttonNode = CKEDITOR.document.getById( button._.id );
-						buttonNode.getChild( 1 ).setHtml( label );
-						buttonNode.setAttribute( 'title', label );
-						buttonNode.setAttribute( 'href', 'javascript:void("' + label + '");' ); // jshint ignore:line
-					}
-
 					// Restore selection and scroll position in editing area.
 					if ( editor.mode == 'wysiwyg' ) {
 						if ( savedSelection ) {
@@ -289,6 +286,7 @@
 			} );
 
 			editor.ui.addButton && editor.ui.addButton( 'Maximize', {
+				isToggle: true,
 				label: lang.maximize.maximize,
 				command: 'maximize',
 				toolbar: 'tools,10'
@@ -305,12 +303,11 @@
 				var historyEvent = editor.config.maximize_historyIntegration === CKEDITOR.HISTORY_NATIVE ?
 					'popstate' : 'hashchange';
 
-				mainWindow.on( historyEvent, function() {
-					var command = editor.getCommand( 'maximize' );
+				mainWindow.on( historyEvent, handleHistoryApi );
 
-					if ( command.state === CKEDITOR.TRISTATE_ON ) {
-						command.exec();
-					}
+				// Remove the history listener when destroying an editor instance (#5396).
+				editor.on( 'destroy', function() {
+					mainWindow.removeListener( historyEvent, handleHistoryApi );
 				} );
 			}
 		}

@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 /**
@@ -19,7 +19,8 @@
  */
 CKEDITOR.lang[ 'en' ] = {
 	// ARIA description.
-	editor: 'Rich Text Editor',
+	application: 'Rich Text Editor',
+	editor: 'Editor',
 	editorPanel: 'Rich Text Editor panel',
 
 	// Common messages and labels.
@@ -142,5 +143,12 @@ CKEDITOR.lang[ 'en' ] = {
 		keyboardShortcut: 'Keyboard shortcut',
 
 		optionDefault: 'Default'
+	},
+
+	versionCheck: {
+		notificationMessage: 'This CKEditor %current version is not secure. Consider <a target="_blank" href="%link">upgrading to the latest one</a>, %latest.',
+		consoleMessage: 'This CKEditor %current version is not secure. Consider upgrading to the latest one, %latest: %link',
+		aboutDialogInsecureMessage: 'This CKEditor %current version is not secure.<br>Consider upgrading to the latest one, %latest:<br><a target="_blank" href="%link">%link</a>',
+		aboutDialogUpgradeMessage: 'Consider upgrading to the latest editor version, %latest:<br><a target="_blank" href="%link">%link</a>'
 	}
 };

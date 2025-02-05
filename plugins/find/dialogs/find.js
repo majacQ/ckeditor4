@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 ( function() {
@@ -141,14 +141,14 @@
 
 		};
 
-		/**
+		/*
 		 * A range of cursors which represent a trunk of characters which try to
 		 * match, it has the same length as the pattern  string.
 		 *
 		 * **Note:** This class isn't accessible from global scope.
 		 *
 		 * @private
-		 * @class CKEDITOR.plugins.find.characterRange
+		 * @class characterRange
 		 * @constructor Creates a characterRange class instance.
 		 */
 		var characterRange = function( characterWalker, rangeLength ) {
@@ -162,7 +162,7 @@
 		};
 
 		characterRange.prototype = {
-			/**
+			/*
 			 * Translate this range to {@link CKEDITOR.dom.range}.
 			 */
 			toDomRange: function() {
@@ -185,7 +185,7 @@
 				return range;
 			},
 
-			/**
+			/*
 			 * Reflect the latest changes from dom range.
 			 */
 			updateFromDomRange: function( domRange ) {
@@ -212,7 +212,7 @@
 				return this._.isMatched;
 			},
 
-			/**
+			/*
 			 * Hightlight the current matched chunk of text.
 			 */
 			highlight: function() {
@@ -241,7 +241,7 @@
 				this.updateFromDomRange( range );
 			},
 
-			/**
+			/*
 			 * Remove highlighted find result.
 			 */
 			removeHighlight: function() {
@@ -556,7 +556,9 @@
 			return searchRange;
 		}
 
-		var lang = editor.lang.find;
+		var lang = editor.lang.find,
+			ENTER_KEY = 13;
+
 		return {
 			title: lang.title,
 			resizable: CKEDITOR.DIALOG_RESIZE_NONE,
@@ -582,7 +584,16 @@
 						label: lang.findWhat,
 						isChanged: false,
 						labelLayout: 'horizontal',
-						accessKey: 'F'
+						accessKey: 'F',
+						onKeyDown: function( evt ) {
+							var keystroke = evt.data.getKeystroke();
+
+							if ( keystroke !== ENTER_KEY ) {
+								return;
+							}
+
+							execFind( this.getDialog() );
+						}
 					},
 					{
 						type: 'button',
@@ -591,15 +602,7 @@
 						style: 'width:100%',
 						label: lang.find,
 						onClick: function() {
-							var dialog = this.getDialog();
-							if ( !finder.find(
-								dialog.getValueOf( 'find', 'txtFindFind' ),
-								dialog.getValueOf( 'find', 'txtFindCaseChk' ),
-								dialog.getValueOf( 'find', 'txtFindWordChk' ),
-								dialog.getValueOf( 'find', 'txtFindCyclic' )
-							) ) {
-								alert( lang.notFoundMsg ); // jshint ignore:line
-							}
+							execFind( this.getDialog() );
 						}
 					} ]
 				},
@@ -646,7 +649,16 @@
 						label: lang.findWhat,
 						isChanged: false,
 						labelLayout: 'horizontal',
-						accessKey: 'F'
+						accessKey: 'F',
+						onKeyDown: function( evt ) {
+							var keystroke = evt.data.getKeystroke();
+
+							if ( keystroke !== ENTER_KEY ) {
+								return;
+							}
+
+							execFindInReplace( this.getDialog() );
+						}
 					},
 					{
 						type: 'button',
@@ -655,17 +667,7 @@
 						style: 'width:100%',
 						label: lang.replace,
 						onClick: function() {
-							var dialog = this.getDialog();
-							if ( !finder.replace(
-								dialog,
-								dialog.getValueOf( 'replace', 'txtFindReplace' ),
-								dialog.getValueOf( 'replace', 'txtReplace' ),
-								dialog.getValueOf( 'replace', 'txtReplaceCaseChk' ),
-								dialog.getValueOf( 'replace', 'txtReplaceWordChk' ),
-								dialog.getValueOf( 'replace', 'txtReplaceCyclic' )
-							) ) {
-								alert( lang.notFoundMsg ); // jshint ignore:line
-							}
+							execReplace( this.getDialog() );
 						}
 					} ]
 				},
@@ -678,7 +680,16 @@
 						label: lang.replaceWith,
 						isChanged: false,
 						labelLayout: 'horizontal',
-						accessKey: 'R'
+						accessKey: 'R',
+						onKeyDown: function( evt ) {
+							var keystroke = evt.data.getKeystroke();
+
+							if ( keystroke !== ENTER_KEY ) {
+								return;
+							}
+
+							execReplace( this.getDialog() );
+						}
 					},
 					{
 						type: 'button',
@@ -699,17 +710,7 @@
 								finder.matchRange = null;
 							}
 							editor.fire( 'saveSnapshot' );
-							while ( finder.replace(
-								dialog,
-								dialog.getValueOf( 'replace', 'txtFindReplace' ),
-								dialog.getValueOf( 'replace', 'txtReplace' ),
-								dialog.getValueOf( 'replace', 'txtReplaceCaseChk' ),
-								dialog.getValueOf( 'replace', 'txtReplaceWordChk' ),
-								false,
-								true
-							) ) {
-
-							}
+							execReplaceAll( dialog );
 
 							if ( finder.replaceCounter ) {
 								alert( lang.replaceSuccessMsg.replace( /%1/, finder.replaceCounter ) ); // jshint ignore:line
@@ -829,6 +830,54 @@
 				}
 			}
 		};
+
+		function execFind( dialog ) {
+			if ( !finder.find(
+				dialog.getValueOf( 'find', 'txtFindFind' ),
+				dialog.getValueOf( 'find', 'txtFindCaseChk' ),
+				dialog.getValueOf( 'find', 'txtFindWordChk' ),
+				dialog.getValueOf( 'find', 'txtFindCyclic' )
+			) ) {
+				alert( lang.notFoundMsg ); // jshint ignore:line
+			}
+
+		}
+
+		function execFindInReplace( dialog ) {
+			if ( !finder.find(
+				dialog.getValueOf( 'replace', 'txtFindReplace' ),
+				dialog.getValueOf( 'replace', 'txtReplaceCaseChk' ),
+				dialog.getValueOf( 'replace', 'txtReplaceWordChk' ),
+				dialog.getValueOf( 'replace', 'txtReplaceCyclic' )
+			) ) {
+				alert( lang.notFoundMsg ); // jshint ignore:line
+			}
+		}
+
+		function execReplace( dialog ) {
+			if ( !finder.replace(
+				dialog,
+				dialog.getValueOf( 'replace', 'txtFindReplace' ),
+				dialog.getValueOf( 'replace', 'txtReplace' ),
+				dialog.getValueOf( 'replace', 'txtReplaceCaseChk' ),
+				dialog.getValueOf( 'replace', 'txtReplaceWordChk' ),
+				dialog.getValueOf( 'replace', 'txtReplaceCyclic' )
+			) ) {
+				alert( lang.notFoundMsg ); // jshint ignore:line
+			}
+		}
+
+		function execReplaceAll( dialog ) {
+			while ( finder.replace(
+				dialog,
+				dialog.getValueOf( 'replace', 'txtFindReplace' ),
+				dialog.getValueOf( 'replace', 'txtReplace' ),
+				dialog.getValueOf( 'replace', 'txtReplaceCaseChk' ),
+				dialog.getValueOf( 'replace', 'txtReplaceWordChk' ),
+				false,
+				true
+			) ) {}
+		}
 
 		function createTextNodeWithPreservedSpaces( editor, text ) {
 			var textWithPreservedSpaces = text.replace( consecutiveWhitespaceRegex,

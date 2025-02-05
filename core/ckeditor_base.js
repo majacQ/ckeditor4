@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 /**
@@ -64,6 +64,11 @@ if ( !window.CKEDITOR ) {
 			 *
 			 *		alert( CKEDITOR.rnd ); // e.g. 319
 			 *
+			 * Generated integer is not cryptographically secure. It has been deprecated to
+			 * prevent using it in a security-sensitive context by accident.
+			 * Use `window.crypto.getRandomValues()` native browser method instead.
+			 *
+			 * @deprecated 4.18.0
 			 * @property {Number}
 			 */
 			rnd: Math.floor( Math.random() * ( 999 /*Max*/ - 100 /*Min*/ + 1 ) ) + 100 /*Min*/,

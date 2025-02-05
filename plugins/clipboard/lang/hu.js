@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang( 'clipboard', 'hu', {
 	copy: 'Másolás',
@@ -11,5 +11,6 @@ CKEDITOR.plugins.setLang( 'clipboard', 'hu', {
 	pasteNotification: 'Nyomja meg a %1 gombot a beillesztéshez. A böngésző nem támogatja a beillesztést az eszköztárról vagy a menüből.',
 	pasteArea: 'Beillesztési terület',
 	pasteMsg: 'Illessze be a tartalmat az alábbi mezőbe, és nyomja meg az OK-t.',
-	fileFormatNotSupportedNotification: 'This file format is not supported. You can try with one of the supported formats: ${formats}.' // MISSING
+	fileFormatNotSupportedNotification: 'The ${formats} file format(s) are not supported.', // MISSING
+	fileWithoutFormatNotSupportedNotification: 'The file format is not supported.' // MISSING
 } );

@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 /**
@@ -656,6 +656,33 @@
 		},
 
 		/**
+		 * Returns a new debounced version of the passed function that will postpone
+		 * its execution until the given milliseconds have elapsed since the last time it was invoked.
+		 *
+		 * @since 4.19.1
+		 * @param {Function} func The function to be executed.
+		 * @param {Number} [milliseconds=0] The amount of time (in milliseconds) to wait
+		 * to fire the function execution.
+		 * @returns {Function}
+		 */
+		debounce: function( func, milliseconds ) {
+			var timeout;
+
+			return function() {
+				var context = this,
+					args = arguments;
+
+				var later = function() {
+					timeout = null;
+					func.apply( context, args );
+				};
+
+				clearTimeout( timeout );
+				timeout = setTimeout( later, milliseconds );
+			};
+		},
+
+		/**
 		 * Creates a {@link CKEDITOR.tools.buffers.throttle throttle buffer} instance.
 		 *
 		 * See the {@link CKEDITOR.tools.buffers.throttle#method-input input method's} documentation for example listings.
@@ -971,13 +998,16 @@
 		 * @returns {Number/String} A number representing the length in pixels or a string with a percentage value.
 		 */
 		convertToPx: ( function() {
-			var calculator;
+			var calculator,
+				boundingClientRect;
 
 			return function( cssLength ) {
-				if ( !calculator ) {
+				// Recreate calculator whenever it was externally manipulated (#5158).
+				if ( !calculator || calculator.isDetached() ) {
 					calculator = CKEDITOR.dom.element.createFromHtml( '<div style="position:absolute;left:-9999px;' +
 						'top:-9999px;margin:0px;padding:0px;border:0px;"' +
 						'></div>', CKEDITOR.document );
+
 					CKEDITOR.document.getBody().append( calculator );
 				}
 
@@ -990,7 +1020,9 @@
 					}
 
 					calculator.setStyle( 'width', cssLength );
-					ret = calculator.$.clientWidth;
+					boundingClientRect = calculator.getClientRect();
+
+					ret = Math.round( boundingClientRect.width );
 
 					if ( isNegative ) {
 						return -ret;

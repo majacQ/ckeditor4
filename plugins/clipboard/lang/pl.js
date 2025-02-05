@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang( 'clipboard', 'pl', {
 	copy: 'Kopiuj',
@@ -11,5 +11,6 @@ CKEDITOR.plugins.setLang( 'clipboard', 'pl', {
 	pasteNotification: 'Naciśnij %1 by wkleić tekst. Twoja przeglądarka nie pozwala na wklejanie za pomocą przycisku paska narzędzi lub opcji menu kontekstowego.',
 	pasteArea: 'Miejsce do wklejenia treści',
 	pasteMsg: 'Wklej treść do obszaru poniżej i naciśnij OK.',
-	fileFormatNotSupportedNotification: 'This file format is not supported. You can try with one of the supported formats: ${formats}.' // MISSING
+	fileFormatNotSupportedNotification: 'The ${formats} file format(s) are not supported.', // MISSING
+	fileWithoutFormatNotSupportedNotification: 'The file format is not supported.' // MISSING
 } );

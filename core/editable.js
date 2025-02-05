@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 ( function() {
@@ -532,7 +532,10 @@
 			 * @param {Boolean} isReadOnly
 			 */
 			setReadOnly: function( isReadOnly ) {
-				this.setAttribute( 'contenteditable', !isReadOnly );
+				this.setAttribute( 'contenteditable', String( !isReadOnly ) );
+
+				// Update also aria-readonly attribute (#1904).
+				this.setAttribute( 'aria-readonly', String( isReadOnly ) );
 			},
 
 			/**
@@ -1397,7 +1400,10 @@
 
 				editable.changeAttr( 'role', 'textbox' );
 				editable.changeAttr( 'aria-multiline', 'true' ); // (#1034)
-				editable.changeAttr( 'aria-label', ariaLabel );
+
+				if ( ariaLabel ) {
+					editable.changeAttr( 'aria-label', ariaLabel );
+				}
 
 				if ( ariaLabel )
 					editable.changeAttr( 'title', ariaLabel );

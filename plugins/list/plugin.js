@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @license Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+ * CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
  */
 
 /**
@@ -855,12 +855,14 @@
 			// Register the toolbar button.
 			if ( editor.ui.addButton ) {
 				editor.ui.addButton( 'NumberedList', {
+					isToggle: true,
 					label: editor.lang.list.numberedlist,
 					command: 'numberedlist',
 					directional: true,
 					toolbar: 'list,10'
 				} );
 				editor.ui.addButton( 'BulletedList', {
+					isToggle: true,
 					label: editor.lang.list.bulletedlist,
 					command: 'bulletedlist',
 					directional: true,

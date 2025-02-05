@@ -3,6 +3,7 @@
 /**
  * Bender configuration file
  *
+ * @param {Object}   licenseKey         CKEditor 4 license key, enabled globally for testing.
  * @param {Object}   applications       Applications used in current project
  * @param {Array}    browsers           List of browsers used for testing
  * @param {Number}   captureTimeout     Timeout before which a launched browser should connect to the server
@@ -28,6 +29,7 @@
 'use strict';
 
 var config = {
+	licenseKey: process.env.CKEDITOR_LICENSE_KEY,
 
 	applications: {
 		ckeditor: {
@@ -76,10 +78,20 @@ var config = {
 				'adapters/**',
 				'!**/_*/**'
 			],
+			// The first officially supported version (1.7.0)
 			// Latest of the old API (1.8.3)
 			// Latest of the 1.* branch
 			// Latest of the 2.* branch
-			jQuery: [ '1.8.3', '1.11.1', '2.1.1' ]
+			// Latest of the 3.* branch
+			// Latest of the 3.*.slim branch
+			jQuery: [
+				'1.7.0',
+				'1.8.3',
+				'1.12.4',
+				'2.2.4',
+				'3.6.0',
+				'3.6.0.slim'
+			]
 		},
 
 		'Core': {

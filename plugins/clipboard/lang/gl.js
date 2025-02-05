@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang( 'clipboard', 'gl', {
 	copy: 'Copiar',
@@ -11,5 +11,6 @@ CKEDITOR.plugins.setLang( 'clipboard', 'gl', {
 	pasteNotification: 'Prema %1 para pegar. O seu navegador non admite pegar co botón da barra de ferramentas ou coa opción do menú contextual.',
 	pasteArea: 'Zona de pegado',
 	pasteMsg: 'Pegue o contido dentro da área de abaixo e prema Aceptar.',
-	fileFormatNotSupportedNotification: 'This file format is not supported. You can try with one of the supported formats: ${formats}.' // MISSING
+	fileFormatNotSupportedNotification: 'Os formatos de ficheiro ${formats} non son compatíbeis.',
+	fileWithoutFormatNotSupportedNotification: 'O formato de ficheiro non está admitido.'
 } );

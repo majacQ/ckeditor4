@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
+CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang( 'clipboard', 'ar', {
 	copy: 'نسخ',
@@ -11,5 +11,6 @@ CKEDITOR.plugins.setLang( 'clipboard', 'ar', {
 	pasteNotification: 'اضغط %1 للصق. اللصق عن طريق شريط الادوات او القائمة غير مدعوم من المتصفح المستخدم من قبلك.',
 	pasteArea: 'منطقة اللصق',
 	pasteMsg: 'الصق المحتوى بداخل المساحة المخصصة ادناه ثم اضغط على OK',
-	fileFormatNotSupportedNotification: 'This file format is not supported. You can try with one of the supported formats: ${formats}.' // MISSING
+	fileFormatNotSupportedNotification: 'The ${formats} file format(s) are not supported.', // MISSING
+	fileWithoutFormatNotSupportedNotification: 'The file format is not supported.' // MISSING
 } );
